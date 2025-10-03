@@ -1,6 +1,6 @@
-from flask import Flask, request, make_response
+from flask import Flask, request, make_response, render_template, url_for, redirect
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='../templates')
 
 #static parameter
 @app.route('/')
@@ -42,7 +42,28 @@ def custom():
 
 
 
+#>>>> templates <<<<
+@app.route('/home')
+def home():
+    name = ["hamoud","saleh"]
+    return render_template('home.html', name=name)
 
 
+#filter
+@app.route('/filters')
+def filters():
+    text = "hello world"
+    return render_template('filters.html', some_text=text)
+
+#custom filter
+@app.template_filter('reverse_string')
+def reverse_string(s):
+    return s[::-1]
+
+#redirecting
+@app.route("/redirect")
+def r_redirect():
+    return redirect(url_for("filters"))
+    
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)

@@ -1,0 +1,11 @@
+{% extends "base_temp.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <p>this page is inherited </p>
+    <ul>
+        {% for item in name %}
+           <li  {% if item =='hamoud' %}style="color: red"{% endif %}> {{item}}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

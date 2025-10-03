@@ -1,0 +1,17 @@
+{% extends "base_temp.html" %}
+
+{% block title %}testing filters{% endblock %}
+
+{% block content %}
+    <h1>Testing filters</h1>
+    <!--built in filters-->
+    <p1>{{ some_text|upper}}</p1><br>
+    <p1>{{some_text|lower}}</p1><br>
+    <p1>{{some_text|title}}</p1><br>
+    <p1>{{some_text|replace("l", "L")}}</p1><br>
+    <!-- customer filter-->
+     <p1>{{some_text|reverse_string}}</p1><br>
+
+     <!--dynamic routing-->
+     <a href="{{ url_for('first')}}">frist</a>
+{% endblock %}
