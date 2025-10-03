@@ -1,0 +1,44 @@
+{% extends 'base_temp.html' %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <h1>Login</h1>
+    <form method="POST" action="{{url_for('post_request')}}">
+    <input type="text" name="user" placeholder="Username"><br>
+    <input type="password" name="password" placeholder="Password"><br>
+    <input type="submit" value="Login">
+    </form>
+
+    <h1>upload file</h1>
+    <form method="POST" action="{{url_for('upload_file')}}" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".docx">
+        <input type="submit" value="upload">
+    </form>
+     <h1>convert</h1>
+    <form method="POST" action="{{url_for('convert_format')}}" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".docx">
+        <input type="submit" value="upload">
+    </form>
+
+    <h1>javascript json request</h1>
+    <button id="post_json">send POST json request</button>
+    <script type="text/javascript">
+        const postButton = ducument.getElementById('post_json')
+        const jsonData = {name: "Hamoud", greeting: "Hi"}
+
+        postButton.addEventListener('click', () => {
+            fetch('{{url_for("json_response")}}',{
+                method: 'POST',
+                header: {
+                    "content-type": 'application/json; charset=utf-8'
+                },
+                body: JSON.stringify(jsonData)
+            })
+            .then(response => response.json())
+            .then(data => console.log('seccess:', data))
+            .catch((error) => {
+                console.error('ERror:', error)
+            })
+        } )
+    </script>
+{% endblock %}

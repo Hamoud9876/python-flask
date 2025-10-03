@@ -1,4 +1,5 @@
-from flask import Flask, request, make_response, render_template, url_for, redirect
+from flask import Flask, request, make_response, render_template, url_for, redirect, jsonify
+from docx import Document
 
 app = Flask(__name__, template_folder='../templates')
 
@@ -64,6 +65,47 @@ def reverse_string(s):
 @app.route("/redirect")
 def r_redirect():
     return redirect(url_for("filters"))
+
+
+# @app.route('/open_for_work')
+# def open_for_work():
+#     return render_template('open_for_work')
+
+
+#forms and post requests
+@app.route('/post_request',methods= ['GET','POST'])
+def post_request():
+    if request.method == 'GET':
+        return render_template('login.html')
+    if request.method == 'POST':
+        username = request.form['user']
+        password = request.form['password']
+        
+        if username == 'hamoud' and password == '123456':
+            return 'success'
+        else:
+            return 'failer'
+        
+#uploading files
+@app.route('/upload_file', methods=['POST'])
+def upload_file():
+    file = request.files['file']
+    document = Document(file)
+    text = "\n".join([para.text for para in document.paragraphs])
+    return text
+
+@app.route('/convert_file_format')
+def convert_format():
+    pass
+
+
+@app.route('/json', methods=["POST"])
+def json_response():
+    greeting = request.json["greeting"]
+    name = request.json["name"]
+    if greeting == 'Hi' and name == 'Hamoud':
+        return jsonify({"message": "Successful"})
+    
     
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)
